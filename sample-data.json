@@ -1,0 +1,150 @@
+{
+  "patients": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "password123",
+      "medicalHistory": [
+        {
+          "visitDate": "2025-06-01",
+          "diagnosis": "Flu",
+          "prescriptions": ["Paracetamol", "Cough Syrup"],
+          "labResults": ["Blood Test: Normal"]
+        }
+      ]
+    }
+  ],
+  "doctors": [
+    {
+      "id": "1",
+      "name": "Dr. Smith",
+      "email": "dr.smith@example.com",
+      "password": "password123",
+      "specialization": "Cardiology",
+      "schedule": [
+        {
+          "date": "2025-06-14",
+          "appointments": [
+            {
+              "patient": "John Doe",
+              "time": "10:00 AM"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "nurses": [
+    {
+      "id": "1",
+      "name": "Nurse Jane",
+      "email": "nurse.jane@example.com",
+      "password": "password123",
+      "assignedPatients": ["John Doe"]
+    }
+  ],
+  "admins": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "password": "admin123"
+    }
+  ],
+    "appointments": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "doctorId": "1",
+        "date": "2025-06-14",
+        "time": "10:00 AM",
+        "status": "Scheduled"
+        }
+    ],
+    "medications": [
+        {
+        "id": "1",
+        "name": "Paracetamol",
+        "dosage": "500mg",
+        "instructions": "Take one tablet every 6 hours as needed."
+        }
+    ],
+    "labTests": [
+        {
+        "id": "1",
+        "name": "Blood Test",
+        "description": "Routine blood test to check overall health.",
+        "results": "Normal"
+        }
+    ],
+    "billing": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "amount": 100.00,
+        "status": "Paid",
+        "date": "2025-06-01"
+        }
+    ],
+    "notifications": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "message": "Your appointment with Dr. Smith is confirmed for June 14, 2025 at 10:00 AM.",
+        "date": "2025-06-01"
+        }
+    ],
+    "settings": {
+        "language": "en",
+        "notifications": true
+    },
+    "logs": [
+        {
+        "id": "1",
+        "userId": "1",
+        "action": "Logged in",
+        "timestamp": "2025-06-01T10:00:00Z"
+        }
+    ],
+    "feedback": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "doctorId": "1",
+        "rating": 5,
+        "comment": "Great service!",
+        "date": "2025-06-01"
+        }
+    ],
+    "reports": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "doctorId": "1",
+        "title": "Annual Checkup Report",
+        "content": "Patient is in good health with no significant issues.",
+        "date": "2025-06-01"
+        }
+    ],
+    "prescriptions": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "doctorId": "1",
+        "medications": ["Paracetamol", "Cough Syrup"],
+        "instructions": "Take as directed.",
+        "date": "2025-06-01"
+        }
+    ],
+    "emergencyContacts": [
+        {
+        "id": "1",
+        "patientId": "1",
+        "name": "Jane Doe",
+        "relationship": "Spouse",
+        "phone": "123-456-7890"
+        }
+    ]
+
+}

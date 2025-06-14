@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: theme('colors.background');
+    color: theme('colors.text');
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    font-size: 16px;
+    overflow-x: hidden;
+    
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: theme('colors.primary');
+}
+
+a {
+  color: theme('colors.accent');
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
