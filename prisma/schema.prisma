@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  role          Role      @default(PATIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  patient       Patient?  @relation("UserToPatient")
+  doctor        Doctor?   @relation("UserToDoctor")
+  nurse         Nurse?    @relation("UserToNurse")
+  admin         Admin?    @relation("UserToAdmin")
+}
+
+model Patient {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  dateOfBirth   DateTime
+  gender        String
+  phone         String
+  address       String
+  bloodType     String?
+  allergies     String?
+  userId        String    @unique
+  user          User      @relation("UserToPatient", fields: [userId], references: [id])
+
+  appointments  Appointment[]
+  medicalRecords MedicalRecord[]
+  vitals        VitalSign[]
+}
+
+model Doctor {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  specialization String
+  phone         String
+  userId        String    @unique
+  user          User      @relation("UserToDoctor", fields: [userId], references: [id])
+
+  appointments  Appointment[]
+  assignedNurses NurseAssignment[]
+  prescriptions Prescription[]
+}
+
+model Nurse {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  phone         String
+  userId        String    @unique
+  user          User      @relation("UserToNurse", fields: [userId], references: [id])
+
+  assignments   NurseAssignment[]
+  vitals        VitalSign[]
+}
+
+model Admin {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  phone         String
+  userId        String    @unique
+  user          User      @relation("UserToAdmin", fields: [userId], references: [id])
+}
+
+model Appointment {
+  id            String    @id @default(cuid())
+  datetime      DateTime
+  status        AppointmentStatus @default(SCHEDULED)
+  type          String
+  notes         String?
+  patientId     String
+  doctorId      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  doctor        Doctor    @relation(fields: [doctorId], references: [id])
+}
+
+model MedicalRecord {
+  id            String    @id @default(cuid())
+  date          DateTime  @default(now())
+  diagnosis     String
+  treatment     String
+  notes         String?
+  patientId     String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  prescriptions Prescription[]
+}
+
+model Prescription {
+  id              String    @id @default(cuid())
+  medication      String
+  dosage          String
+  frequency       String
+  duration        String
+  notes           String?
+  doctorId        String
+  medicalRecordId String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  doctor          Doctor    @relation(fields: [doctorId], references: [id])
+  medicalRecord   MedicalRecord @relation(fields: [medicalRecordId], references: [id])
+}
+
+model NurseAssignment {
+  id            String    @id @default(cuid())
+  nurseId       String
+  doctorId      String
+  startDate     DateTime
+  endDate       DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  nurse         Nurse     @relation(fields: [nurseId], references: [id])
+  doctor        Doctor    @relation(fields: [doctorId], references: [id])
+}
+
+model VitalSign {
+  id            String    @id @default(cuid())
+  temperature   Float?
+  bloodPressure String?
+  heartRate     Int?
+  respiratoryRate Int?
+  notes         String?
+  patientId     String
+  nurseId       String
+  createdAt     DateTime  @default(now())
+
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  nurse         Nurse     @relation(fields: [nurseId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  DOCTOR
+  NURSE
+  PATIENT
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
